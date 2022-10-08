@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        android:orientation="vertical">
+        <!--
+        控件ID
+        android:id="@+id/text1"
+        控件在整个布局中的宽度：match_parent(根据父元素),wrap_content(根据内容),xxdp(类型html的px是一种单位)
+        android:layout_width="match_parent"
+        控件在整个布局中的高度：可选项和宽度一样
+        android:layout_height="wrap_content"
+        控件本身的垂直对齐方式：可多个值|分隔
+        android:gravity="center"
+        控件在整个布局中的垂直对齐方式
+        android:layout_gravity="center"
+        控件内容
+        android:text="你好"
+        控件的文本颜色
+        android:textColor="#cc66ff"
+        控件的文字大小，使用sp单位可随系统大小变化而变化
+        android:textSize="30sp"
+        -->
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="你好"
+            android:textColor="#cc66ff"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="按钮" />
+
+<!--
+文本框提示文本
+android:hint="这是输入框提示文字"
+界面最大显示行数，超出部分隐藏
+android:maxLines="2"
+-->
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="这是输入框提示文字"
+            android:maxLines="2"
+            android:minHeight="48dp" />
+<!--
+图片路径@drawable关键字会根据设备大小自动寻找对应分辨率图片
+android:src="@drawable/img_1"
+-->
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_1"
+            android:visibility="visible"
+            />
+
+<!--
+进度条样式，可选值有很多。
+style="?android:attr/progressBarStyleHorizontal"
+进度条范围
+android:max="100"
+-->
+
+        <ProgressBar
+            android:id="@+id/progress_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:max="100"
+            />
+        <ToggleButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
