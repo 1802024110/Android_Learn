@@ -19,9 +19,12 @@ class FruitAdapter(val fruitList:List<Fruit>):RecyclerView.Adapter<FruitAdapter.
         val view = LayoutInflater.from(parent.context)
         .inflate(R.layout.fruit_item,parent,false)
 
+//        将view转换为viewHolder
         val viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
+//           提取当前被点击view的position
             val position = viewHolder.adapterPosition
+//            提取出当前fruit对象
             val fruit = fruitList[position]
             Toast.makeText(parent.context,"你点击了文本${fruit.name}",Toast.LENGTH_SHORT).show()
         }
