@@ -1,6 +1,7 @@
 package com.example.recyclerviewtest
 
 import android.media.Image
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ class FruitAdapter(val fruitList:List<Fruit>):RecyclerView.Adapter<FruitAdapter.
             Toast.makeText(parent.context,"你点击了图片${fruit.name}",Toast.LENGTH_SHORT).show()
         }
 
-        return ViewHolder(view)
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
