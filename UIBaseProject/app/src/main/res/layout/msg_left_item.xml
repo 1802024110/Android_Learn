@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:background="@drawable/message_left"/>
+        android:background="@drawable/message_left">
     <TextView
         android:id="@+id/leftMsg"
         android:layout_width="wrap_content"
@@ -15,4 +15,5 @@
         android:gravity="center"
         android:layout_margin="10dp"
         android:textColor="#fff"/>
+    </LinearLayout>
 </FrameLayout>
