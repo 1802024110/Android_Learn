@@ -19,12 +19,10 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(RightFragment())
     }
     private fun replaceFragment(fragment: Fragment){
-        val fragmentManager = supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.rightLayout,fragment)
-//        FragmentTransaction中提供了一个addToBackStack()方法，可以用于将一个事务添加到返回栈中。
-//        ，它可以/接收一个名字用于描述返回栈的状态，一般传入null即可。
-        transaction.addToBackStack(null)
-        transaction.commit()
+//        val fragmentManager = supportFragmentManager
+//        val transaction = fragmentManager.beginTransaction()
+//        transaction.replace(R.id.rightLayout,fragment)
+//        transaction.addToBackStack(null)
+//        transaction.commit()
     }
 }
