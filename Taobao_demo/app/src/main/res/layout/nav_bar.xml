@@ -2,22 +2,27 @@
 <LinearLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="42dp">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <ImageView
+
+        <ImageButton
+            android:id="@+id/home_button"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
+            android:scaleType="fitCenter"
+            android:background="#00FFFFFF"
             android:src="@drawable/home__1_"
             />
         <TextView
+            android:id="@+id/home_text"
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:text="首页"
             />
     </LinearLayout>
@@ -26,16 +31,19 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <ImageView
+        <ImageButton
+            android:id="@+id/weitao_button"
+            android:scaleType="fitCenter"
+            android:background="#00FFFFFF"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:src="@drawable/weitao"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:text="微淘"
             />
     </LinearLayout>
@@ -44,16 +52,19 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <ImageView
+        <ImageButton
+            android:id="@+id/xiaoxi_button"
+            android:scaleType="fitCenter"
+            android:background="#00FFFFFF"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:src="@drawable/xiaoxi"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:text="消息"
             />
     </LinearLayout>
@@ -62,16 +73,19 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <ImageView
+        <ImageButton
+            android:id="@+id/gwuche_button"
+            android:scaleType="fitCenter"
+            android:background="#00FFFFFF"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:src="@drawable/gwuche"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="10sp"
             android:text="购物车"
             />
     </LinearLayout>
@@ -80,17 +94,20 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <ImageView
+        <ImageButton
+            android:id="@+id/wode_button"
+            android:scaleType="fitCenter"
+            android:background="#00FFFFFF"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
             android:src="@drawable/wode"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="我的"
+            android:textSize="10sp"
+            android:text="我的淘宝"
             />
     </LinearLayout>
 
