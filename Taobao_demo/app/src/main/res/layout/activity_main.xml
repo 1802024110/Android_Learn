@@ -38,12 +38,12 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:background="#F2F2F2"/>
-                <TextView
+                <EditText
                     android:layout_width="0dp"
+                    android:background="@color/white"
                     android:layout_height="match_parent"
-                    android:gravity="left|center"
-                    android:textColor="#000"
                     android:text="女生自用"
+                    android:maxLines="1"
                     android:layout_weight="1"/>
                 <ImageButton
                     android:layout_width="50dp"

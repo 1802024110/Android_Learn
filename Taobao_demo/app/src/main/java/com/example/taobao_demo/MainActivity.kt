@@ -27,19 +27,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener{
         backSrc(v)
         when(v?.id){
             R.id.home_button->{ v as ImageButton
-                v.setImageResource(R.drawable.sys)
+                v.setImageResource(R.drawable.home_click)
             }
             R.id.weitao_button->{ v as ImageButton
-                v.setImageResource(R.drawable.home__1_)
+                v.setImageResource(R.drawable.weitao_click)
             }
             R.id.xiaoxi_button->{ v as ImageButton
-                v.setImageResource(R.drawable.gwuche)
+                v.setImageResource(R.drawable.xiaoxi_click)
             }
             R.id.gwuche_button->{ v as ImageButton
-                v.setImageResource(R.drawable.xiaoxi)
+                v.setImageResource(R.drawable.gowuche_click)
             }
             R.id.wode_button->{ v as ImageButton
-                v.setImageResource(R.drawable.weitao)
+                v.setImageResource(R.drawable.wode_click)
             }
         }
     }
