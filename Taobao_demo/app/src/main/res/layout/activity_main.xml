@@ -2,89 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_marginVertical="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-        <ImageButton
-            android:id="@+id/qiandao"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="#00FFFFFF"
-            android:scaleType="fitCenter"
-            android:src="@drawable/qiandao" />
-        <com.google.android.material.card.MaterialCardView
-            app:shapeAppearanceOverlay="@style/roundBox"
-            android:layout_height="match_parent"
-            android:layout_width="0dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="2dp"
-            app:strokeColor="#FA5205"
-            android:layout_weight="1">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:background="#00FFFFFF"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/sys" />
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:background="#F2F2F2"/>
-                <EditText
-                    android:layout_width="0dp"
-                    android:background="@color/white"
-                    android:layout_height="match_parent"
-                    android:text="女生自用"
-                    android:maxLines="1"
-                    android:layout_weight="1"/>
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:background="#00FFFFFF"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/__1" />
-
-                <com.google.android.material.card.MaterialCardView
-                    app:shapeAppearanceOverlay="@style/roundBox"
-                    app:cardBackgroundColor="#FF5702"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:text="搜索"
-                        android:gravity="center"
-                        android:textColor="#fff"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-        <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/huiyuan"
-            android:background="#00FFFFFF"
-            android:scaleType="fitCenter"/>
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
+<!--头部搜索-->
+    <include layout="@layout/home_top"/>
+<!--    中间主要区域-->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_recyclerView1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </ScrollView>
+<!--    底部导航-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp">
-        <include
-            android:id="@+id/bar"
-            layout="@layout/nav_bar"/>
+        <com.example.taobao_demo.Bar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </LinearLayout>
