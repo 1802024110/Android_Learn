@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="80dp"
+    android:layout_height="110dp">
     <ImageButton
-        android:id="@+id/home_center_top_icon"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:src="@drawable/tianmao"
+        android:id="@+id/home_center_top_icon1"
+        android:layout_width="40dp"
+        android:layout_gravity="center"
         android:scaleType="fitCenter"
         android:background="#00FFFFFF"
-        android:layout_height="0dp"/>
+        android:layout_height="40dp"/>
     <TextView
-        android:id="@+id/home_center_top_text"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:text="天猫新品"
-        android:layout_weight="1"/>
+        android:id="@+id/home_center_top_text1"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+         />
+    <ImageButton
+        android:id="@+id/home_center_top_icon2"
+        android:layout_width="40dp"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:background="#00FFFFFF"
+        android:layout_height="40dp"/>
+    <TextView
+        android:id="@+id/home_center_top_text2"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+        />
 </LinearLayout>
