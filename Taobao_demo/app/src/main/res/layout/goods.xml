@@ -22,8 +22,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
             <ImageView
                 android:id="@+id/goods_cover"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/qiandao" />
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/goods_title"
