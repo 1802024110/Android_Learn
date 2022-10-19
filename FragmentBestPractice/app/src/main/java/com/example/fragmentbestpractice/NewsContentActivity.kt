@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 class NewsContentActivity : AppCompatActivity() {
     companion object {
         fun actionStart(context: Context, title: String, content: String) {
+//            给NewsContentActivity传入数据
             val intent = Intent(context, NewsContentActivity::class.java).apply {
                 putExtra("news_title", title)
                 putExtra("news_content", content)
             }
+//            启动Activity
             context.startActivity(intent)
         }
     }
