@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
-        android:src="@drawable/qiandao" />
+        android:src="@drawable/img_03" />
     <com.google.android.material.card.MaterialCardView
         app:shapeAppearanceOverlay="@style/roundBox"
         android:layout_height="match_parent"
@@ -23,11 +23,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageButton
-                android:layout_width="50dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:background="#00FFFFFF"
                 android:scaleType="fitCenter"
-                android:src="@drawable/sys" />
+                android:src="@drawable/qrcode_09" />
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
@@ -64,7 +65,7 @@
     <ImageButton
         android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:src="@drawable/huiyuan"
+        android:src="@drawable/img_06"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"/>
 </LinearLayout>

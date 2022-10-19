@@ -76,9 +76,6 @@ class MainActivity : AppCompatActivity() {
             indicatorContainer.addView(imageView)
         }
     }
-    suspend fun test(){
-
-    }
 
     private val runnable: Runnable = object : Runnable {
         override fun run() {

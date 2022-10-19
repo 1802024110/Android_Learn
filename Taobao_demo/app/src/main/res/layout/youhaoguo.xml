@@ -58,13 +58,13 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/sys" />
+                android:src="@mipmap/yhh1" />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/sys" />
+                android:src="@mipmap/bybd2" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<!--改为帧布局，方便将指示器重合-->
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -7,4 +8,12 @@
         android:id="@+id/viewpager2"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</LinearLayout>
+    <!--    为指示器准备的布局-->
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/container_indicator"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal" />
+</FrameLayout>

@@ -1,12 +1,15 @@
 package com.example.mysviewpage2
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 
 class MyViewPage2Adapter(private val imageList: ArrayList<Int>) : RecyclerView.Adapter<MyViewPage2Adapter.ViewHolder>(){
+    private val TAG = "MyViewPage2Adapter"
     inner class ViewHolder(val view:View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.image)
     }
@@ -17,11 +20,9 @@ class MyViewPage2Adapter(private val imageList: ArrayList<Int>) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        通过取余，一直循环
         val i  = position % imageList.size
         holder.imageView.setImageResource(imageList[i])
     }
 
-//    设置一个超级大的数(2147483647)，达成理论无限滚动
     override fun getItemCount(): Int = Int.MAX_VALUE
 }
