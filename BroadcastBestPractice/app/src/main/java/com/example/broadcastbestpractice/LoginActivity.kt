@@ -1,41 +1,60 @@
 package com.example.broadcastbestpractice
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 
-// 这里要继承BaseActivity
 class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // 登录按钮
+        // 关键代码开始
+        val prefs = getPreferences(Context.MODE_PRIVATE)
+        val isRemember = prefs.getBoolean("remember_password", false)
+        val account = prefs.getString("account", "")
+        val password = prefs.getString("password", "")
+        val accountEdit:EditText = findViewById(R.id.accountEdit)
+        val passwordEdit:EditText = findViewById(R.id.passwordEdit)
+        val rememberPass:CheckBox = findViewById(R.id.rememberPass)
+        if(isRemember) {
+            // 将账号和密码都设置到文本框中
+            accountEdit.setText(account)
+            passwordEdit.setText(password)
+            rememberPass.isChecked = true
+        }
+        // 关键代码结束
+
         val login = findViewById<Button>(R.id.login)
-        // 账号控件
-        val accountEdit = findViewById<EditText>(R.id.accountEdit)
-        // 密码控件
-        val passwordEdit = findViewById<EditText>(R.id.passwordEdit)
-        // 监听点击登录按钮
         login.setOnClickListener {
-            // 获得账号
             val account = accountEdit.text.toString()
-            // 获得密码
             val password = passwordEdit.text.toString()
+
+            // 关键代码开始
             if (account == "admin" && password == "123456"){
-                // 如果相等就创建Intent
+                val editor = prefs.edit()
+                // 检查复选框是否被选中
+                if(rememberPass.isChecked){
+                    editor.putBoolean("remember_password",true)
+                    editor.putString("account",account)
+                    editor.putString("password",password)
+                }else{
+                    editor.clear()
+                }
+                editor.apply()
+                // 关键代码结束
+
                 val intent = Intent(this,MainActivity::class.java)
-                // 启动主视图
                 startActivity(intent)
-                // 关闭这个视图
                 finish()
             }else{
-                // 提示错误
                 Toast.makeText(this,"账号或密码错误", Toast.LENGTH_SHORT).show()
             }
         }
