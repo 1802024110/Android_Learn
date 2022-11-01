@@ -22,6 +22,9 @@ class MyDatabaseHelper(val context: Context,name:String,version:Int) : SQLiteOpe
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(createBook)
         db?.execSQL(createCategory)
+        val values = cvOf("name" to "Game of Thrones", "author" to "George Martin",
+            "pages" to 720, "price" to 20.85)
+        db?.insert("Book",null,values)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
