@@ -2,67 +2,63 @@ package com.example.contactstest
 
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.UriMatcher
 import android.database.Cursor
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.net.Uri
 
 class MyProvider : ContentProvider() {
-    // 初始化ContentProvider时调用的，通常用于数据库的创建和升级操作，返回true表示ContentProvider初始化成功，false失败。
+    private val table1Dir = 0
+    private val table1Item = 1
+    private val table2Dir = 2
+    private val table2Item = 3
+    private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
+    init {
+        uriMatcher.addURI("com.example.app.provider", "table1", table1Dir)
+        uriMatcher.addURI("com.example.app.provider ", "table1/#", table1Item)
+        uriMatcher.addURI("com.example.app.provider ", "table2", table2Dir)
+        uriMatcher.addURI("com.example.app.provider ", "table2/#", table2Item)
+    }
+    override fun query(
+        uri: Uri,
+        projection: Array<out String>?,
+        selection: String?,
+        selectionArgs: Array<out String>?,
+        sortOrder: String?
+    ): Cursor? {
+        when (uriMatcher.match(uri)) {
+            table1Dir -> TODO("查询table1表中的所有数据")
+            table1Item -> TODO("查询table1表中单条数据")
+            table2Dir -> TODO("查询table2表中的所有数据")
+            table2Item -> TODO("查询table2表中单条数据")
+        }
+        TODO("Not yet implemented")
+    }
     override fun onCreate(): Boolean {
         TODO("Not yet implemented")
     }
-
-    // 从ContentProvider中查询数据，查询结果放置到Cursor(游标)对象返回。
-    override fun query(
-        // 确定查询的表
-        uri: Uri,
-        // 确定查询的列
-        projection: Array<out String>?,
-        // 约束条件
-        selection: String?,
-        // 约束条件的具体值
-        selectionArgs: Array<out String>?,
-        // 排序
-        sortOrder: String?
-    ): Cursor? {
+    override fun insert(uri: Uri, values: ContentValues?): Uri? {
         TODO("Not yet implemented")
     }
-
-    // 根据传入的URI返回相应的MIME类型
-    override fun getType(uri: Uri): String? {
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
         TODO("Not yet implemented")
     }
-
-    // 向ContentProvider中添加一条数据，返回添加的新记录的URI
-    override fun insert(
-        // 要添加的表
-        uri: Uri,
-        // 待添加的数据
-        values: ContentValues?): Uri? {
-        TODO("Not yet implemented")
-    }
-
-    // 从ContentProvider中删除数据，返回被删除的行数
-    override fun delete(
-        // 确定被删除的表名
-        uri: Uri,
-        // 约束条件
-        selection: String?,
-        // 约束具体值
-        selectionArgs: Array<out String>?): Int {
-        TODO("Not yet implemented")
-    }
-
-    // 更新ContentProvider中的数据，返回受影响行数
     override fun update(
-        // 确定添加的表名
         uri: Uri,
-        // 待添加的数据
         values: ContentValues?,
-        // 约束条件
         selection: String?,
-        // 约束条件的具体值
         selectionArgs: Array<out String>?
     ): Int {
         TODO("Not yet implemented")
     }
+
+    // 关键代码开始
+    override fun getType(uri: Uri):String? = when(uriMatcher.match(uri)){
+        table1Dir -> "vnd.android.cursor.dir/vnd.com.example.app.provider.table1"
+        table1Item -> "vnd.android.cursor.item/vnd.com.example.app.provider.table1"
+        table2Dir -> "vnd.android.cursor.dir/vnd.com.example.app.provider.table2"
+        table2Item -> "vnd.android.cursor.item/vnd.com.example.app.provider.table2"
+        else -> null
+    }
+    // 关键代码结束
 }
