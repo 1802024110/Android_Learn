@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="DatabaseProvider._READ_PERMISSION" />
-    <uses-permission android:name="DatabaseProvider._WRITE_PERMISSION" />
-<!--    指定databasetest对本应用可见-->
+
+    <!--指定databasetest对本应用可见-->
     <queries>
         <package android:name="com.example.databasetest" />
         <!-- 也可以单独指定provider -->
