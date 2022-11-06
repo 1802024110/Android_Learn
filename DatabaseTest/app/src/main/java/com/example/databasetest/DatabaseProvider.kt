@@ -24,7 +24,7 @@ class DatabaseProvider : ContentProvider() {
     private val uriMatcher by lazy {
         val matcher = UriMatcher(UriMatcher.NO_MATCH)
         matcher.addURI(authority,"book",bookDir)
-        matcher.addURI(authority,"books/#",bookItem)
+        matcher.addURI(authority,"book/#",bookItem)
         matcher.addURI(authority,"category",categoryDir)
         matcher.addURI(authority,"category/#",categoryItem)
         matcher
