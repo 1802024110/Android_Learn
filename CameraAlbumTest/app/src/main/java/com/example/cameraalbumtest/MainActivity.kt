@@ -8,14 +8,13 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import java.io.File
-import kotlin.text.Typography.degree
 
 class MainActivity : AppCompatActivity() {
     val takePhoto = 1
@@ -26,20 +25,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val takePhotoBtn:Button = findViewById(R.id.takePhotoBtn)
+        val takePhotoBtn: Button = findViewById(R.id.takePhotoBtn)
         takePhotoBtn.setOnClickListener {
-            // 创建File对象用于存储拍的照片
-            outputImage = File(externalCacheDir,"out_img.jpg")
+            // 创建File对象用于存储拍的照片,放在当前应用缓存数据的位置
+            outputImage = File(externalCacheDir,"output_image.jpg")
             if (outputImage.exists()){
                 outputImage.delete()
             }
             outputImage.createNewFile()
+            // 检查系统是否低于Android7
             imageUri = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
-                FileProvider.getUriForFile(this,"com.example.cameraalbumtest.fileprovider",outputImage)
+                // 低于就转为Uri对象
+                FileProvider.getUriForFile(this,"com.exa" +
+                        "mple.cameraalbumtest.fileprovider",outputImage)
             }else{
+                // 否则从文件创建Uri。
                 Uri.fromFile(outputImage)
             }
+            // 启动相机程序
             val intent = Intent("android.media.action.IMAGE_CAPTURE")
+            // 指定图片的输出地址
             intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri)
             // 新的写法
 //            registerForActivityResult(intent,takePhoto)
@@ -53,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode){
             takePhoto->{
                 if (resultCode == Activity.RESULT_OK){
+                    // 将拍摄的照片显示出来
                     val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
                     imageView.setImageBitmap(rotateIfRequired(bitmap))
                 }
@@ -76,7 +82,8 @@ class MainActivity : AppCompatActivity() {
         matrix.postRotate(degree.toFloat())
         val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height,
             matrix, true)
-        bitmap.recycle() // 将不再需要的Bitmap对象回收
+        // 将不再需要的Bitmap对象回收
+        bitmap.recycle()
         return rotatedBitmap
     }
 }
