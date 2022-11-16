@@ -20,24 +20,33 @@ class MainActivity : AppCompatActivity() {
         val sendNotice: Button = findViewById(R.id.sendNotice)
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel("normal","这是通知名字",NotificationManager.IMPORTANCE_DEFAULT)
+//            val channel = NotificationChannel("normal","这是通知名字",NotificationManager.IMPORTANCE_DEFAULT)
+//            manager.createNotificationChannel(channel)
+
+            // 更改重要等级
+            val channel = NotificationChannel("important","这是重要通知",NotificationManager.IMPORTANCE_HIGH)
             manager.createNotificationChannel(channel)
+
         }else{
             Toast.makeText(this,"安卓版本过低",Toast.LENGTH_SHORT).show()
         }
         sendNotice.setOnClickListener {
-
-            // 构建意图
-            val intent = Intent(this,NotificationActivity::class.java)
-            // Intent的描述和要执行的目标操作
-            val pi = PendingIntent.getActivity(this,0,intent,0)
-
-            val notification = NotificationCompat.Builder(this,"normal").apply {
-                setContentTitle("这是通知标题")
-                setContentText("这是通知文本")
+//            val intent = Intent(this,NotificationActivity::class.java)
+//            val pi = PendingIntent.getActivity(this,0,intent,0)
+//            val notification = NotificationCompat.Builder(this,"normal").apply {
+//                setContentTitle("这是通知标题")
+//                setStyle(NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(resources,R.drawable.big_image)))
+//                setSmallIcon(R.drawable.small_icon)
+//                setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.large_icon))
+//                setContentIntent(pi)
+//            }.build()
+            val intent = Intent(this, NotificationActivity::class.java)
+            val pi = PendingIntent.getActivity(this, 0, intent, 0)
+            val notification = NotificationCompat.Builder(this, "important").apply {
+                setContentTitle("重要通知")
+                setStyle(NotificationCompat.BigPictureStyle().bigPicture(BitmapFactory.decodeResource(resources,R.drawable.big_image)))
                 setSmallIcon(R.drawable.small_icon)
                 setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.large_icon))
-                // 设置跳转意图
                 setContentIntent(pi)
             }.build()
             manager.notify(1,notification)
