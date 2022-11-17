@@ -23,14 +23,23 @@ class MainActivity : AppCompatActivity() {
     lateinit var imageUri: Uri
     lateinit var outputImage: File
 
-    // 新的写法
-    private val getImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            var imageView: ImageView = findViewById(R.id.imageView)
-            val bitmap =
-                BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
-            imageView.setImageBitmap(rotateIfRequired(bitmap))
-        }
+    /* registerForActivityResult()注册一个请求来启动一个活动的ActivityResultLauncher,接收两个参数
+    * 参数一: 约定的intent合约，需要查表
+    * 参数二: 执行的回调方法
+    * */
+    private val getImage = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        // ActivityResultContracts.TakePicture()是拍照的合约,回调方法传入一个指示成功的布尔值接收一个Uri
+            // 判断拍照成功没有
+            if (it){
+                // 判断有没有uri链接
+                imageUri?.let {
+                    var imageView: ImageView = findViewById(R.id.imageView)
+                    // 打开图片然后转为位图
+                    val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
+                    // 设置图片
+                    imageView.setImageBitmap(bitmap)
+                }
+            }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,13 +49,8 @@ class MainActivity : AppCompatActivity() {
         val takePhotoBtn: Button = findViewById(R.id.takePhotoBtn)
 
         takePhotoBtn.setOnClickListener {
-            // 创建File对象用你、
-            // 于存储拍的照片,放在当前应用缓存数据的位置
+            // 创建File对象用于存储拍的照片,放在当前应用缓存数据的位置
             outputImage = File(externalCacheDir,"output_image.jpg")
-            if (outputImage.exists()){
-                outputImage.delete()
-            }
-            outputImage.createNewFile()
             // 检查系统是否低于Android7
             imageUri = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
                 // 低于就将File转为Uri对象
@@ -56,34 +60,7 @@ class MainActivity : AppCompatActivity() {
                 // 否则从文件创建Uri。
                 Uri.fromFile(outputImage)
             }
-            // 启动相机程序
-            val intent = Intent("android.media.action.IMAGE_CAPTURE")
-            // 指定图片的输出地址
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri)
-            getImage.launch(intent)
+            getImage.launch(imageUri)
         }
-    }
-
-    // 旋转判断
-    private fun rotateIfRequired(bitmap: Bitmap): Bitmap {
-        val exif = ExifInterface(outputImage.path)
-        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_NORMAL)
-        return when(orientation){
-            ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap,90)
-            ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap,90)
-            ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap,90)
-            else -> bitmap
-        }
-    }
-
-    // 选择
-    private fun rotateBitmap(bitmap: Bitmap, degree: Int): Bitmap {
-        val matrix = Matrix()
-        matrix.postRotate(degree.toFloat())
-        val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height,
-            matrix, true)
-        // 将不再需要的Bitmap对象回收
-        bitmap.recycle()
-        return rotatedBitmap
     }
 }
