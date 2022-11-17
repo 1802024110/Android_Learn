@@ -12,6 +12,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import java.io.File
@@ -21,11 +23,22 @@ class MainActivity : AppCompatActivity() {
     lateinit var imageUri: Uri
     lateinit var outputImage: File
 
+    // 新的写法
+    private val getImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            var imageView: ImageView = findViewById(R.id.imageView)
+            val bitmap =
+                BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
+            imageView.setImageBitmap(rotateIfRequired(bitmap))
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val takePhotoBtn: Button = findViewById(R.id.takePhotoBtn)
+
         takePhotoBtn.setOnClickListener {
             // 创建File对象用你、
             // 于存储拍的照片,放在当前应用缓存数据的位置
@@ -47,26 +60,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent("android.media.action.IMAGE_CAPTURE")
             // 指定图片的输出地址
             intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri)
-            // 新的写法
-//            registerForActivityResult(intent,takePhoto)
-            // 启动Activity，传入请求标识码
-            startActivityForResult(intent,takePhoto)
-        }
-    }
-
-    // 当启动的Activity返回东西触发
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        var imageView: ImageView = findViewById(R.id.imageView)
-        // 判断是不是我们的请求
-        when (requestCode){
-            takePhoto->{
-                if (resultCode == Activity.RESULT_OK){
-                    // 将拍摄的照片显示出来
-                    val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
-                    imageView.setImageBitmap(rotateIfRequired(bitmap))
-                }
-            }
+            getImage.launch(intent)
         }
     }
 
