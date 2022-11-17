@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         val takePhotoBtn: Button = findViewById(R.id.takePhotoBtn)
         takePhotoBtn.setOnClickListener {
-            // 创建File对象用于存储拍的照片,放在当前应用缓存数据的位置
+            // 创建File对象用你、
+            // 于存储拍的照片,放在当前应用缓存数据的位置
             outputImage = File(externalCacheDir,"output_image.jpg")
             if (outputImage.exists()){
                 outputImage.delete()
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             outputImage.createNewFile()
             // 检查系统是否低于Android7
             imageUri = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
-                // 低于就转为Uri对象
+                // 低于就将File转为Uri对象
                 FileProvider.getUriForFile(this,"com.exa" +
                         "mple.cameraalbumtest.fileprovider",outputImage)
             }else{
@@ -48,13 +49,16 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri)
             // 新的写法
 //            registerForActivityResult(intent,takePhoto)
+            // 启动Activity，传入请求标识码
             startActivityForResult(intent,takePhoto)
         }
     }
 
+    // 当启动的Activity返回东西触发
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         var imageView: ImageView = findViewById(R.id.imageView)
+        // 判断是不是我们的请求
         when (requestCode){
             takePhoto->{
                 if (resultCode == Activity.RESULT_OK){
@@ -66,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 旋转判断
     private fun rotateIfRequired(bitmap: Bitmap): Bitmap {
         val exif = ExifInterface(outputImage.path)
         val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_NORMAL)
@@ -77,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // 选择
     private fun rotateBitmap(bitmap: Bitmap, degree: Int): Bitmap {
         val matrix = Matrix()
         matrix.postRotate(degree.toFloat())
