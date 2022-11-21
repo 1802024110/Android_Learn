@@ -24,11 +24,9 @@ class MyService : Service() {
     }
     override fun onBind(intent: Intent): IBinder {
         return mBinding
-    }
-
+     }
     override fun onCreate() {
         super.onCreate()
-
         Log.d("MyService", "onCreate executed")
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -44,7 +42,7 @@ class MyService : Service() {
             setLargeIcon(BitmapFactory.decodeResource(resources,R.drawable.large_icon))
             setContentIntent(pi)
         }.build()
+        // 让这个服务在前台运行
         startForeground(1,notification)
-
     }
 }
