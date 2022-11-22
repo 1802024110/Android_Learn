@@ -4,13 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.TextView
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserFactory
+import org.xml.sax.Attributes
+import org.xml.sax.InputSource
+import org.xml.sax.helpers.DefaultHandler
 import java.io.StringReader
 import kotlin.concurrent.thread
+import java.lang.StringBuilder
+import javax.xml.parsers.SAXParserFactory
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +34,18 @@ class MainActivity : AppCompatActivity() {
                 val response = client.newCall(request).execute()
                 val responseData = response.body?.string()
                 responseData?.let {
-                    // 将输出方法改为转换xml
-                    parseXMLWithPull(it)
+                    try {
+                        val factory = SAXParserFactory.newInstance()
+                        val xmlReader = factory.newSAXParser().XMLReader
+                        val handler = ContentHandler()
+                        // 将ContentHandler的实例设置到XMLReader中
+                        xmlReader.contentHandler = handler
+                        // 开始执行解析
+                        xmlReader.parse(InputSource(StringReader(xmlData)))
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
                 }
             }catch (e:Exception){
                 e.printStackTrace()
@@ -41,44 +53,57 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun parseXMLWithPull(xmlData: String) {
-        try {
-            // 创建可用于创建XML拉式解析器的PullParserFactory的新实例。
-            val factory = XmlPullParserFactory.newInstance()
-            // 使用当前配置的工厂特性创建XML Pull Parser的新实例。
-            val xmlPullParser = factory.newPullParser()
-            // 将解析器的输入源设置为给定的字符串读取器并重置解析器。
-            xmlPullParser.setInput(StringReader(xmlData))
-            // 返回当前事件的类型(START_TAG, END_TAG, TEXT等)。
-            var eventType = xmlPullParser.eventType
-            var id = ""
-            var name = ""
-            var version = ""
-            // xml文档的逻辑结束
-            while (eventType!=XmlPullParser.END_DOCUMENT){
-                // 对于START_TAG或END_TAG事件，在启用名称空间时返回当前元素的(本地)名称。
-                val nodeName = xmlPullParser.name
-                when (eventType) {
-                    // 读取开始标记时。
-                    XmlPullParser.START_TAG -> {
-                        when (nodeName) {
-                            "id" -> id = xmlPullParser.nextText()
-                            "name" -> name = xmlPullParser.nextText()
-                            "version" -> version = xmlPullParser.nextText()
-                        }
-                    }
-                    // 完成解析某个节点
-                    XmlPullParser.END_TAG -> {
-                        if ("app" == nodeName) {
-                            Log.d("MainActivity", "id is $id")
-                            Log.d("MainActivity", "name is $name")
-                            Log.d("MainActivity", "version is $version")
-                        }
-                    }
-                }
-                // 获取下一个解析事件
-                eventType = xmlPullParser.next()
+    inner class ContentHandler : DefaultHandler() {
+        private var nodeName = ""
+        private lateinit var id:StringBuilder
+        private lateinit var name: StringBuilder
+        private lateinit var version:StringBuilder
+
+        // 开始XML解析的时候
+        override fun startDocument() {
+            // 将这几个变量重置
+            id = StringBuilder()
+            name = StringBuilder()
+            version = StringBuilder()
+        }
+
+        // 解析某个节点的时候
+        override fun startElement(
+            uri: String, localName: String, qName: String, attributes: Attributes
+        ) {
+            // 当前节点名字
+            nodeName = localName
+            Log.d("ContentHandler", "uri is $uri")
+            Log.d("ContentHandler", "localName is $localName")
+            Log.d("ContentHandler", "qName is $qName")
+            Log.d("ContentHandler", "attributes is $attributes")
+        }
+
+        //获取节点/中内容的时候
+        override fun characters(ch: CharArray, start: Int, length: Int) {
+            // 根据当前节点名判断将内容添加到哪一个StringBuilder对象中
+            when(nodeName){
+                "id" -> id.append(ch, start, length)
+                "name" -> name.append(ch, start, length)
+                "version" -> version.append(ch, start, length)
             }
-        } catch (e:Exception){}
+        }
+
+        // 完成解析某个节点的时候
+        override fun endElement(uri: String, localName: String, qName: String) {
+            // 判断app节点是否解析完成
+            if ("app" == localName) {
+                Log.d("ContentHandler", "id is ${id.toString().trim()}")
+                Log.d("ContentHandler", "name is ${name.toString().trim()}")
+                Log.d("ContentHandler", "version is ${version.toString().trim()}")
+                // 最后要将StringBuilder清空
+                id.setLength(0)
+                name.setLength(0)
+                version.setLength(0)
+            }
+        }
+
+        // 完成整个XML解析的时候
+        override fun endDocument() {}
     }
 }
