@@ -8,7 +8,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.Response
 import org.json.JSONArray
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
@@ -55,4 +59,6 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
+
 }
