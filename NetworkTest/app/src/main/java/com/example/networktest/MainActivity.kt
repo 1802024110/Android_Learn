@@ -36,12 +36,12 @@ class MainActivity : AppCompatActivity() {
                 responseData?.let {
                     try {
                         val factory = SAXParserFactory.newInstance()
-                        val xmlReader = factory.newSAXParser().XMLReader
+                        val xmlReader = factory.newSAXParser().xmlReader
                         val handler = ContentHandler()
                         // 将ContentHandler的实例设置到XMLReader中
                         xmlReader.contentHandler = handler
                         // 开始执行解析
-                        xmlReader.parse(InputSource(StringReader(xmlData)))
+                        xmlReader.parse(InputSource(StringReader(it)))
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
