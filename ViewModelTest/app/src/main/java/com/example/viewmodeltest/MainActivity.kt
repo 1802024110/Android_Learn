@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.viewmodeltest.Repository.getUser
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel:MainViewModel
@@ -21,19 +22,28 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this,MainViewModelFactory(countReserved)).get(MainViewModel::class.java)
         val plusOneBth:Button = findViewById(R.id.plusOneBtn)
         plusOneBth.setOnClickListener {
-            // 替换
             viewModel.plusOne()
         }
         val clearBtn:Button = findViewById(R.id.clearBtn)
         clearBtn.setOnClickListener {
-            // 替换
             viewModel.clear()
         }
-        // 替换
         viewModel.counter.observe(this,Observer{
             val infoText:TextView = findViewById(R.id.infoText)
             infoText.text = it.toString()
         })
+
+        //
+        val getUserBtn:Button = findViewById(R.id.getUserBtn)
+        getUserBtn.setOnClickListener {
+            val userId = (0..1000).random().toString()
+            viewModel.getUser(userId)
+        }
+        viewModel.user.observe(this,Observer{
+            val infoText:TextView = findViewById(R.id.infoText)
+            infoText.text = it.firstName
+        })
+        //
     }
     override fun onPause() {
         super.onPause()
