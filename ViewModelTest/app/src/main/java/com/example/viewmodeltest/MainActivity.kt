@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.viewmodeltest.Repository.getUser
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel:MainViewModel
@@ -32,8 +34,6 @@ class MainActivity : AppCompatActivity() {
             val infoText:TextView = findViewById(R.id.infoText)
             infoText.text = it.toString()
         })
-
-        //
         val getUserBtn:Button = findViewById(R.id.getUserBtn)
         getUserBtn.setOnClickListener {
             val userId = (0..1000).random().toString()
@@ -43,7 +43,41 @@ class MainActivity : AppCompatActivity() {
             val infoText:TextView = findViewById(R.id.infoText)
             infoText.text = it.firstName
         })
-        //
+
+        val userDao = AppDatabase.getDatabase(this).userDao()
+        val user1 = User("Tom","Brady",40)
+        val user2 = User("Tom","Hanks",63)
+
+        val addDataBtn:Button = findViewById(R.id.addDataBtn)
+        val updateDataBtn:Button = findViewById(R.id.updateDataBtn)
+        val deleteDataBtn:Button = findViewById(R.id.deleteDataBtn)
+        val queryDataBtn:Button = findViewById(R.id.queryDataBtn)
+
+        addDataBtn.setOnClickListener {
+            thread {
+                user1.id = userDao.insertUser(user1)
+                user2.id = userDao.insertUser(user2)
+            }
+        }
+        updateDataBtn.setOnClickListener {
+            thread {
+                user1.age = 42
+                userDao.updateUser(user1)
+            }
+        }
+        deleteDataBtn.setOnClickListener {
+            thread{
+                userDao.deleteUserByLastName("Hanks")
+            }
+        }
+        queryDataBtn.setOnClickListener{
+            thread{
+                for (user in userDao.loadAllUsers()){
+                    Log.d("MainActivity", user.toString())
+                }
+            }
+        }
+
     }
     override fun onPause() {
         super.onPause()
