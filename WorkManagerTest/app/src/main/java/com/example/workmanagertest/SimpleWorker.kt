@@ -1,9 +1,13 @@
 package com.example.workmanagertest
 
+import android.content.Context
+import android.util.Log
 import androidx.work.Worker
+import androidx.work.WorkerParameters
 
-class SimpleWorker : Worker(){
+class SimpleWorker(context: Context,params:WorkerParameters) : Worker(context,params){
     override fun doWork(): Result {
-        TODO("Not yet implemented")
+        Log.d("SimpleWorker", "do work in SimpleWorker")
+        return Result.success()
     }
 }
